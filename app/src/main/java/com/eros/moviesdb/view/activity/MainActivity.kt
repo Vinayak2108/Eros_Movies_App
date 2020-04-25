@@ -1,7 +1,8 @@
-package com.eros.moviesdb
+package com.eros.moviesdb.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.eros.moviesdb.R
 
 class MainActivity : AppCompatActivity() {
 
