@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.eros.moviesdb.view.fragments.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.eros.moviesdb.view.fragments.MovieDetailFragment"
+        android:label="movie_detail_fragment"
+        tools:layout="@layout/movie_detail_fragment" />
+    <fragment
+        android:id="@+id/favouriteMoviesFragment"
+        android:name="com.eros.moviesdb.view.fragments.FavouriteMoviesFragment"
+        android:label="favourite_movies_fragment"
+        tools:layout="@layout/favourite_movies_fragment" >
+        <action
+            android:id="@+id/action_favouriteMoviesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="com.eros.moviesdb.view.fragments.MoviesFragment"
+        android:label="movies_fragment"
+        tools:layout="@layout/movies_fragment" >
+        <action
+            android:id="@+id/action_moviesFragment_to_movieDetailFragment2"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+</navigation>

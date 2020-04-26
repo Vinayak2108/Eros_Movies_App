@@ -16,9 +16,9 @@ interface MovieDao{
     fun deleteMovie(movie: Movie)
 
     @Query("SELECT * FROM movie")
-    fun getAll():ArrayList<Movie>
+    fun getAll():List<Movie>
 
     @Query("SELECT * FROM movie WHERE id = (:movieId)")
-    fun getMovie(movieId:Int)
+    fun getMovie(movieId:Int):Movie
 
 }
