@@ -1,7 +1,7 @@
 package com.eros.moviesdb.model.network
 
-import com.eros.moviesdb.model.pojo.MovieDetail
-import com.eros.moviesdb.model.pojo.MoviesResponse
+import com.eros.moviesdb.model.db.pojo.MovieDetail
+import com.eros.moviesdb.model.db.pojo.MoviesResponse
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit

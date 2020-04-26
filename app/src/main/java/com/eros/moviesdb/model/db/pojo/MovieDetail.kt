@@ -1,4 +1,4 @@
-package com.eros.moviesdb.model.pojo
+package com.eros.moviesdb.model.db.pojo
 
 data class SpokenLanguagesItem(val name: String = "",
                                val iso: String = "")
