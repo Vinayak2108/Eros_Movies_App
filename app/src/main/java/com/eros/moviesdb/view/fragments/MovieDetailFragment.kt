@@ -26,10 +26,6 @@ class MovieDetailFragment : BaseFragment() {
         return inflater.inflate(R.layout.movie_detail_fragment, container, false)
     }
 
-    override fun loadData() {
-        TODO("Not yet implemented")
-    }
-
     override fun renderUI() {
         TODO("Not yet implemented")
     }

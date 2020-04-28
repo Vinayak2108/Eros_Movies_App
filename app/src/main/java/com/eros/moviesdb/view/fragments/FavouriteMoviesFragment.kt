@@ -26,10 +26,6 @@ class FavouriteMoviesFragment : BaseFragment() {
         return inflater.inflate(R.layout.favourite_movies_fragment, container, false)
     }
 
-    override fun loadData() {
-        TODO("Not yet implemented")
-    }
-
     override fun renderUI() {
         TODO("Not yet implemented")
     }

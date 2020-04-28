@@ -44,8 +44,6 @@ class HomeFragment : BaseFragment() {
         renderUI()
     }
 
-    override fun loadData() {}
-
     override fun renderUI() {
         viewBinding.pager.adapter = PagerAdapter(this,fragmentList)
         TabLayoutMediator(viewBinding.tabLayout, viewBinding.pager,

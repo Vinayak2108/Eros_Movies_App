@@ -19,7 +19,6 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    abstract fun loadData()
     abstract fun renderUI()
 
 
