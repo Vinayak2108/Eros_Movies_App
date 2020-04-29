@@ -10,10 +10,10 @@ import com.eros.moviesdb.model.db.pojo.Movie
 interface MovieDao{
 
     @Insert
-    fun addMovie(movie:Movie)
+    fun addMovie(movie:Movie):Long
 
     @Delete
-    fun deleteMovie(movie: Movie)
+    fun deleteMovie(movie: Movie):Int
 
     @Query("SELECT * FROM movie")
     fun getAll():List<Movie>

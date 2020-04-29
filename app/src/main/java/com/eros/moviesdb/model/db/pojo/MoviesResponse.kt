@@ -21,6 +21,7 @@ data class Movie(val overview: String = "",
                  val voteAverage: Double = 0.0,
                  @PrimaryKey(autoGenerate = false) val id: Int = 0,
                  val adult: Boolean = false,
+                 var isFavourite:Boolean = false,
                  val voteCount: Int = 0)
 
 

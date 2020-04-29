@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/card_radius"
     android:layout_margin="@dimen/component_margin"
-    android:layout_height="250dp">
+    android:layout_height="300dp">
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,13 +27,55 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@android:color/white"
             android:id="@+id/name"/>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:drawableStart="@drawable/ic_rating"
+                android:textColor="@android:color/white"
+                android:paddingStart="5dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:drawablePadding="3dp"
+                android:background="@drawable/outline_background"
+                android:id="@+id/rating"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/outline_background"
+                android:id="@+id/launchYear"/>
+
+        </FrameLayout>
+
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end"
+        android:tint="@android:color/white"
+        android:padding="10dp"
+        android:id="@+id/favIcon"/>
 
 </FrameLayout>
 

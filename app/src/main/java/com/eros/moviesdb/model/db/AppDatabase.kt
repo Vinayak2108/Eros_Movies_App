@@ -16,6 +16,6 @@ abstract class AppDatabase: RoomDatabase()
 
 object DBProvider{
     val db by lazy {
-        Room.databaseBuilder(Eros.appContext,AppDatabase::class.java,DB_NAME)
+        Room.databaseBuilder(Eros.appContext,AppDatabase::class.java,DB_NAME).build()
     }
 }
