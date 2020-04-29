@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
+import com.eros.moviesdb.model.db.DBProvider
 import com.eros.moviesdb.model.db.pojo.Movie
 import com.eros.moviesdb.model.db.pojo.MoviesResponse
 import com.eros.moviesdb.model.network.APIProvider

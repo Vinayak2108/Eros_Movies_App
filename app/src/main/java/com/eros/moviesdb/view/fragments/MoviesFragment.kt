@@ -51,7 +51,7 @@ class MoviesFragment : BaseFragment(), AdapterClickHandler {
                 viewModel.resetNotifyDataChanges()
             }
         })
-        list.adapter = adapter
+        viewBinder.list.adapter = adapter
     }
 
     override fun onItemClick(id: Int) {

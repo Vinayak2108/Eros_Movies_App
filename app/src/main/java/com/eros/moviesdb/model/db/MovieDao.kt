@@ -1,5 +1,6 @@
 package com.eros.moviesdb.model.db
 
+import androidx.paging.DataSource
 import androidx.room.*
 import com.eros.moviesdb.model.db.pojo.Movie
 
@@ -12,10 +13,10 @@ interface MovieDao{
     @Delete
     fun deleteMovie(movie: Movie):Int
 
-    @Query("SELECT * FROM movie")
-    fun getAll():List<Movie>
-
     @Query("SELECT * FROM movie WHERE id = (:movieId)")
     fun getMovie(movieId:Int):Movie
+
+    @Query("SELECT * FROM movie")
+    fun getAll(): DataSource.Factory<Int?, Movie>
 
 }
