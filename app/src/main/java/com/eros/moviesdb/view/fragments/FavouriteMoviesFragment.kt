@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavigatorProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.eros.moviesdb.AdapterClickHandler
+import com.eros.moviesdb.R
 
 import com.eros.moviesdb.databinding.FavouriteMoviesFragmentBinding
 import com.eros.moviesdb.model.db.pojo.Movie
@@ -50,7 +52,9 @@ class FavouriteMoviesFragment : BaseFragment(), AdapterClickHandler {
     }
 
     override fun onItemClick(id: Int) {
-
+        val bundle = Bundle()
+        bundle.putInt("ID",id)
+        parentFragment?.findNavController()?.navigate(R.id.action_homeFragment_to_movieDetailFragment,bundle)
     }
 
     override fun setFavourite(movie: Movie, favourite: Boolean, position: Int) {

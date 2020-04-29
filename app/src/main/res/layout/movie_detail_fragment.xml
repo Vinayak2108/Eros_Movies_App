@@ -1,13 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context=".view.fragments.MovieDetailFragment">
 
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:actualImageScaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_black_to_transparent_overly"
+            android:layout_marginTop="400dp"
+            android:paddingTop="100dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/rating"
+                style="@style/text.content.small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/outline_background"
+                android:drawableStart="@drawable/ic_rating"
+                android:drawablePadding="3dp"
+                android:paddingTop="3dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="3dp"
+                tools:text="3.2/10" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text.heading"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/tagLine"
+                style="@style/text.content.small"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:text="Other content" />
+
+            <TextView
+                android:id="@+id/year_length_certificate"
+                style="@style/text.content.small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                tools:text="year | Country" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                style="@style/text.content"
+                tools:text="Description" />
+
+             <com.eros.moviesdb.view.customview.FlowLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/genre"/>
+
+
+            <!--<TextView
+                android:id="@+id/genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text.content"
+                android:layout_marginTop="10dp"
+                tools:text="Genre details" />-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/availableInTitle"
+                style="@style/text.content"
+                android:layout_marginTop="15dp"
+                android:text="@string/available_in"
+                tools:text="Available in" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/language"
+                style="@style/text.content.small"
+                android:layout_marginTop="5dp"
+                tools:text="Marathi | Hindi | English" />
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</ScrollView>

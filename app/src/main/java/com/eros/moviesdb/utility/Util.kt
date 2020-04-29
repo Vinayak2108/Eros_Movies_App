@@ -11,3 +11,10 @@ fun getYear(date:String?): String {
         ""
     }
 }
+
+fun getHrMin(min:Int): String {
+    return if(min!=0)
+        "${min/60}H:${min%60}M"
+    else
+        "00H:00M"
+}

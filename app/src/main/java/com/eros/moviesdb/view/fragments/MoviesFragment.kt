@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.eros.moviesdb.AdapterClickHandler
+import com.eros.moviesdb.R
 
 import com.eros.moviesdb.databinding.MoviesFragmentBinding
 import com.eros.moviesdb.model.db.pojo.Movie
@@ -55,7 +58,9 @@ class MoviesFragment : BaseFragment(), AdapterClickHandler {
     }
 
     override fun onItemClick(id: Int) {
-        //todo move to detail screen
+        val bundle = Bundle()
+        bundle.putInt("ID",id)
+        parentFragment?.findNavController()?.navigate(R.id.action_homeFragment_to_movieDetailFragment,bundle)
     }
 
     override fun setFavourite(movie:Movie,isFavourit: Boolean,position:Int) {

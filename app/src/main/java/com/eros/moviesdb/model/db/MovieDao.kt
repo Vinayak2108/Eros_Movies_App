@@ -14,7 +14,7 @@ interface MovieDao{
     fun deleteMovie(movie: Movie):Int
 
     @Query("SELECT * FROM movie WHERE id = (:movieId)")
-    fun getMovie(movieId:Int):Movie
+    fun getMovie(movieId:Int):Movie?
 
     @Query("SELECT * FROM movie")
     fun getAll(): DataSource.Factory<Int?, Movie>

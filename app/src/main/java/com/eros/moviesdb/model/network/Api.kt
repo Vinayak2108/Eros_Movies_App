@@ -20,11 +20,11 @@ interface API {
                  @Query("page") page:Int = 0): Call<MoviesResponse>
 
 
-    @GET("/movie/{movie_id}")
-    fun getMovieDetail(@Query("api_key") apiKey:String = TOKEN,
-                  @Path("movie_id") movieId:Int = 0): Call<MovieDetail>
+    @GET("movie/{movie_id}")
+    fun getMovieDetail(@Path("movie_id") movieId:Int = 0,
+                       @Query("api_key") apiKey:String = TOKEN): Call<MovieDetail>
 
-    @GET("/search/movie")
+    @GET("search/movie")
     fun searchMovie(@Query("api_key") apiKey:String = TOKEN,
                     @Query("query")query:String,
                     @Query("page") page:Int = 0):Call<MoviesResponse>
