@@ -1,15 +1,12 @@
 package com.eros.moviesdb.model.db
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.eros.moviesdb.model.db.pojo.Movie
 
 @Dao
 interface MovieDao{
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addMovie(movie:Movie):Long
 
     @Delete
