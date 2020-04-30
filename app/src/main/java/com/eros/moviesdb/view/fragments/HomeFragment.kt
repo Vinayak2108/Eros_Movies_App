@@ -1,9 +1,8 @@
 package com.eros.moviesdb.view.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -38,8 +37,10 @@ class HomeFragment : BaseFragment() {
         return viewBinding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         fragmentViewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
         renderUI()
     }
@@ -51,6 +52,11 @@ class HomeFragment : BaseFragment() {
                 tab.text = fragmentList[position].title
             }
         ).attach()
+    }
+
+    fun submitQuery(query: String) {
+        (fragmentList[0].fragment as MoviesFragment).submitQuery(query)
+        viewBinding.pager.setCurrentItem(0,true)
     }
 
 }

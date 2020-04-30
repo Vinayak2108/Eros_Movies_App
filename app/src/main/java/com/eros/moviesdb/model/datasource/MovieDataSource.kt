@@ -16,15 +16,20 @@ import retrofit2.Response
 private const val firstPage =  1
 const val pageSize =  20
 
-class MovieDataSource: PageKeyedDataSource<Int, Movie>() {
+class MovieDataSource(private val query:String?): PageKeyedDataSource<Int, Movie>() {
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Movie>
     ) {
-        APIProvider.api.getMovies(page = firstPage).enqueue(object : Callback<MoviesResponse>{
+        val request = if(query.isNullOrBlank()){
+            APIProvider.api.getMovies(page = firstPage)
+        }else{
+            APIProvider.api.searchMovie(page = firstPage,query = query)
+        }
+        request.enqueue(object : Callback<MoviesResponse>{
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                Log.i("API",t.message)
+                Log.i("API",t.message ?: "")
             }
             override fun onResponse(
                 call: Call<MoviesResponse>,
@@ -38,9 +43,15 @@ class MovieDataSource: PageKeyedDataSource<Int, Movie>() {
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        APIProvider.api.getMovies(page = params.key).enqueue(object : Callback<MoviesResponse>{
+
+        val request = if(query.isNullOrBlank()){
+            APIProvider.api.getMovies(page = firstPage)
+        }else{
+            APIProvider.api.searchMovie(page = firstPage,query = query)
+        }
+        request.enqueue(object : Callback<MoviesResponse>{
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                Log.i("API",t.message)
+                Log.i("API",t.message ?: "")
             }
             override fun onResponse(
                 call: Call<MoviesResponse>,
@@ -58,9 +69,14 @@ class MovieDataSource: PageKeyedDataSource<Int, Movie>() {
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        APIProvider.api.getMovies(page = params.key).enqueue(object : Callback<MoviesResponse>{
+        val request = if(query.isNullOrBlank()){
+            APIProvider.api.getMovies(page = firstPage)
+        }else{
+            APIProvider.api.searchMovie(page = firstPage,query = query)
+        }
+        request.enqueue(object : Callback<MoviesResponse>{
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                Log.i("API",t.message)
+                Log.i("API",t.message ?: "")
             }
             override fun onResponse(
                 call: Call<MoviesResponse>,
@@ -76,13 +92,13 @@ class MovieDataSource: PageKeyedDataSource<Int, Movie>() {
     }
 }
 
-class MovieDataSourceFactory : DataSource.Factory<Int,Movie>(){
+class MovieDataSourceFactory(private val query:String) : DataSource.Factory<Int,Movie>(){
     private val _movieDataSource = MutableLiveData<PageKeyedDataSource<Int,Movie>>()
     val movieDataSource: LiveData<PageKeyedDataSource<Int, Movie>>
     get() = _movieDataSource
 
     override fun create(): DataSource<Int, Movie> {
-        val dataSource = MovieDataSource()
+        val dataSource = MovieDataSource(query)
         _movieDataSource.postValue(dataSource)
         return dataSource
     }

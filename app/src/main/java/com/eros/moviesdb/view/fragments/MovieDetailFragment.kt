@@ -2,13 +2,14 @@ package com.eros.moviesdb.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.eros.moviesdb.R
-
 import com.eros.moviesdb.databinding.MovieDetailFragmentBinding
 import com.eros.moviesdb.viewmodel.MovieDetailViewModel
 
@@ -22,6 +23,11 @@ class MovieDetailFragment : BaseFragment() {
     private lateinit var viewModel: MovieDetailViewModel
     private lateinit var view: MovieDetailFragmentBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,8 +36,14 @@ class MovieDetailFragment : BaseFragment() {
         return view.root
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val item = menu.findItem(R.id.search)
+        if (item != null) item.isVisible = false
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
         arguments?.getInt("ID")?.let { viewModel.loadData(it) }
         renderUI()

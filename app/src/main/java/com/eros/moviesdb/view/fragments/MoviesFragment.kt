@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.eros.moviesdb.AdapterClickHandler
@@ -16,7 +15,6 @@ import com.eros.moviesdb.databinding.MoviesFragmentBinding
 import com.eros.moviesdb.model.db.pojo.Movie
 import com.eros.moviesdb.view.adapters.MovieItemAdapter
 import com.eros.moviesdb.viewmodel.MoviesViewModel
-import kotlinx.android.synthetic.main.movies_fragment.*
 
 class MoviesFragment : BaseFragment(), AdapterClickHandler {
 
@@ -63,9 +61,13 @@ class MoviesFragment : BaseFragment(), AdapterClickHandler {
         parentFragment?.findNavController()?.navigate(R.id.action_homeFragment_to_movieDetailFragment,bundle)
     }
 
-    override fun setFavourite(movie:Movie,isFavourit: Boolean,position:Int) {
-        movie.isFavourite = !isFavourit
-        viewModel.setFavourite(movie,isFavourit,position)
+    override fun setFavourite(movie:Movie, favourite: Boolean, position:Int) {
+        movie.isFavourite = !favourite
+        viewModel.setFavourite(movie,favourite,position)
+    }
+
+    fun submitQuery(query: String) {
+        viewModel.setSearch(query)
     }
 
 

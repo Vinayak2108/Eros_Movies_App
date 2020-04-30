@@ -1,9 +1,6 @@
 package com.eros.moviesdb.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
@@ -19,21 +16,26 @@ import java.text.ParsePosition
 class MoviesViewModel() : ViewModel() {
 
     var movies:LiveData<PagedList<Movie>>
-    var dataSource:LiveData<PageKeyedDataSource<Int,Movie>>
+    lateinit var dataSource:LiveData<PageKeyedDataSource<Int,Movie>>
     private val _notifyDataChanges = MutableLiveData<Int>()
     val notifyDataChanges:LiveData<Int>
     get() = _notifyDataChanges
 
+    private val _searchQuery = MutableLiveData<String>("")
+    private val searchQuery:LiveData<String>
+    get() = _searchQuery
 
     init {
-        val dataSourceFactory = MovieDataSourceFactory()
-        dataSource = dataSourceFactory.movieDataSource
-        val config = PagedList.Config.Builder().setPageSize(pageSize).build()
-        movies = LivePagedListBuilder(dataSourceFactory,config).build()
+        movies = Transformations.switchMap(searchQuery) {
+            val dataSourceFactory = MovieDataSourceFactory(it)
+            dataSource = dataSourceFactory.movieDataSource
+            val config = PagedList.Config.Builder().setPageSize(pageSize).build()
+            return@switchMap LivePagedListBuilder(dataSourceFactory,config).build()
+        }
     }
 
-    fun setFavourite(movie: Movie, favourite: Boolean,position: Int) {
 
+    fun setFavourite(movie: Movie, favourite: Boolean,position: Int) {
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 val status = if(favourite){
@@ -53,4 +55,7 @@ class MoviesViewModel() : ViewModel() {
         _notifyDataChanges.value = -1
     }
 
+    fun setSearch(query: String) {
+        _searchQuery.value = query
+    }
 }
