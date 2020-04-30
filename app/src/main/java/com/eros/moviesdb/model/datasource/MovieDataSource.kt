@@ -45,9 +45,9 @@ class MovieDataSource(private val query:String?): PageKeyedDataSource<Int, Movie
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
 
         val request = if(query.isNullOrBlank()){
-            APIProvider.api.getMovies(page = firstPage)
+            APIProvider.api.getMovies(page = params.key)
         }else{
-            APIProvider.api.searchMovie(page = firstPage,query = query)
+            APIProvider.api.searchMovie(page = params.key,query = query)
         }
         request.enqueue(object : Callback<MoviesResponse>{
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
@@ -70,9 +70,9 @@ class MovieDataSource(private val query:String?): PageKeyedDataSource<Int, Movie
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         val request = if(query.isNullOrBlank()){
-            APIProvider.api.getMovies(page = firstPage)
+            APIProvider.api.getMovies(page = params.key)
         }else{
-            APIProvider.api.searchMovie(page = firstPage,query = query)
+            APIProvider.api.searchMovie(page = params.key,query = query)
         }
         request.enqueue(object : Callback<MoviesResponse>{
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {

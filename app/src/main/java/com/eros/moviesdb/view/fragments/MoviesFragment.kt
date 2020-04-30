@@ -6,15 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.eros.moviesdb.AdapterClickHandler
 import com.eros.moviesdb.R
-
 import com.eros.moviesdb.databinding.MoviesFragmentBinding
 import com.eros.moviesdb.model.db.pojo.Movie
 import com.eros.moviesdb.view.adapters.MovieItemAdapter
 import com.eros.moviesdb.viewmodel.MoviesViewModel
+import kotlinx.android.synthetic.main.movie_detail_fragment.*
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MoviesFragment : BaseFragment(), AdapterClickHandler {
 
@@ -39,12 +44,30 @@ class MoviesFragment : BaseFragment(), AdapterClickHandler {
         renderUI()
     }
 
+    fun showLoader(){
+        viewBinder.messageView.messageView.visibility = View.GONE
+        viewBinder.shimmering.shimmering.startShimmer()
+        viewBinder.shimmering.shimmering.visibility = View.VISIBLE
+    }
+    private fun hideLoader(){
+        viewBinder.shimmering.shimmering.stopShimmer()
+        viewBinder.shimmering.shimmering.visibility = View.GONE
+    }
+
     override fun renderUI() {
         viewBinder.list.layoutManager = GridLayoutManager(requireContext(),2)
         viewBinder.list.setHasFixedSize(true)
         val adapter = MovieItemAdapter(this)
         viewModel.movies.observe(viewLifecycleOwner,Observer {
             adapter.submitList(it)
+            if(it.size>20){
+                hideLoader()
+            }else{
+                lifecycleScope.launch {
+                    delay(3000)
+                    hideLoader()
+                }
+            }
         })
         viewModel.notifyDataChanges.observe(viewLifecycleOwner, Observer {
             if(it != -1) {
@@ -53,6 +76,22 @@ class MoviesFragment : BaseFragment(), AdapterClickHandler {
             }
         })
         viewBinder.list.adapter = adapter
+
+        viewBinder.messageView.messageView.setOnClickListener {
+            hideMessage()
+            viewModel.retryDataCall()
+        }
+
+    }
+
+    private fun showMessage(message: String, subMessage: String) {
+        viewBinder.messageView.message.text = message
+        viewBinder.messageView.subMessage.text = subMessage
+        viewBinder.messageView.messageView.visibility = View.VISIBLE
+    }
+
+    private fun hideMessage() {
+        viewBinder.messageView.messageView.visibility = View.GONE
     }
 
     override fun onItemClick(id: Int) {

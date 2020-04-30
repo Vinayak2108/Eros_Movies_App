@@ -15,11 +15,6 @@ import com.eros.moviesdb.viewmodel.MovieDetailViewModel
 
 class MovieDetailFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance() =
-            MovieDetailFragment()
-    }
-
     private lateinit var viewModel: MovieDetailViewModel
     private lateinit var view: MovieDetailFragmentBinding
 
@@ -65,9 +60,41 @@ class MovieDetailFragment : BaseFragment() {
                         view.genre.addView(getFlowChild(genre.name))
                 }
             }
-
-
+            hideMessage()
+            hideLoader()
         })
+
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            showMessage(it.message,it.subMessage)
+        })
+
+        view.messageView.messageView.setOnClickListener {
+            hideMessage()
+            showLoader()
+            arguments?.getInt("ID")?.let { viewModel.loadData(it) }
+        }
+
+    }
+
+    private fun hideMessage() {
+        view.messageView.messageView.visibility = View.GONE
+    }
+
+
+    private fun showMessage(message: String, subMessage: String) {
+        view.messageView.messageView.visibility = View.VISIBLE
+        view.messageView.message.text = message
+        view.messageView.subMessage.text = subMessage
+    }
+
+    private fun hideLoader() {
+        view.shimmeringView.shimmering.stopShimmer()
+        view.shimmeringView.shimmeringView.visibility = View.GONE
+    }
+
+    private fun showLoader(){
+        view.shimmeringView.shimmering.startShimmer()
+        view.shimmeringView.shimmeringView.visibility = View.VISIBLE
     }
 
     private fun getFlowChild(text:String?):View{

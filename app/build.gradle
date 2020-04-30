@@ -69,6 +69,9 @@ dependencies {
     //Fresco image loading lib
     implementation 'com.facebook.fresco:fresco:2.2.0'
 
+    //For Shimmer effect
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 
 
 }

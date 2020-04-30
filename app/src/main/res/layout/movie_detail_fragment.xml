@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:background="@drawable/outline_background"
+                android:background="@drawable/outline_round_corner_three_dp_trasnparent"
                 android:drawableStart="@drawable/ic_rating"
                 android:drawablePadding="3dp"
                 android:paddingTop="3dp"
@@ -108,6 +108,12 @@
 
 
         </LinearLayout>
+
+        <include layout="@layout/movie_detail_shimmering"
+            android:id="@+id/shimmeringView"/>
+
+        <include layout="@layout/message_view"
+            android:id="@+id/messageView"/>
 
     </FrameLayout>
 

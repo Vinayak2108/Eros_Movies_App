@@ -29,7 +29,7 @@ class MoviesViewModel() : ViewModel() {
         movies = Transformations.switchMap(searchQuery) {
             val dataSourceFactory = MovieDataSourceFactory(it)
             dataSource = dataSourceFactory.movieDataSource
-            val config = PagedList.Config.Builder().setPageSize(pageSize).build()
+            val config = PagedList.Config.Builder().setEnablePlaceholders(false).setPageSize(pageSize).build()
             return@switchMap LivePagedListBuilder(dataSourceFactory,config).build()
         }
     }
@@ -58,4 +58,9 @@ class MoviesViewModel() : ViewModel() {
     fun setSearch(query: String) {
         _searchQuery.value = query
     }
+
+    fun retryDataCall(){
+        dataSource.value?.invalidate()
+    }
+
 }

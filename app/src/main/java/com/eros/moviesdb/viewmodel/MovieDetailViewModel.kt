@@ -19,6 +19,9 @@ import com.eros.moviesdb.utility.getYear
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.lang.StringBuilder
 
 class MovieDetailViewModel : ViewModel() {
@@ -49,10 +52,25 @@ class MovieDetailViewModel : ViewModel() {
     fun loadData(id:Int){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                val response = APIProvider.api.getMovieDetail(movieId = id).execute()
-                if(response.isSuccessful){
-                    _movieDetails.postValue(response.body())
-                }
+                APIProvider.api.getMovieDetail(movieId = id).enqueue(object:Callback<MovieDetail>{
+                    override fun onFailure(call: Call<MovieDetail>, t: Throwable) {
+                        _errorMessage.postValue(Message("Not Connected","Check internet Connection"))
+                    }
+                    override fun onResponse(
+                        call: Call<MovieDetail>,
+                        response: Response<MovieDetail>
+                    ) {
+                        if(response.isSuccessful){
+                            _movieDetails.postValue(response.body())
+                        }else{
+                            when(response.code()){
+                                404-> {_errorMessage.postValue(Message("Not Found","Check Another Movie"))}
+                                else -> {_errorMessage.postValue(Message("Server Error","Try again letter"))}
+                            }
+                        }
+                    }
+
+                })
             }
         }
     }
@@ -74,5 +92,11 @@ class MovieDetailViewModel : ViewModel() {
     val movieDetails: LiveData<MovieDetail>
         get() = _movieDetails
 
+    private val _errorMessage = MutableLiveData<Message>()
+    val errorMessage:LiveData<Message>
+    get() = _errorMessage
 
 }
+
+
+data class Message(val message:String,val subMessage:String)

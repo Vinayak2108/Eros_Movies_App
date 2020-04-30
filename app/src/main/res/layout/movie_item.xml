@@ -50,7 +50,7 @@
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
                 android:drawablePadding="3dp"
-                android:background="@drawable/outline_background"
+                android:background="@drawable/outline_round_corner_three_dp_trasnparent"
                 android:id="@+id/rating"/>
 
             <TextView
@@ -62,7 +62,7 @@
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
                 android:textColor="@android:color/white"
-                android:background="@drawable/outline_background"
+                android:background="@drawable/outline_round_corner_three_dp_trasnparent"
                 android:id="@+id/launchYear"/>
 
         </FrameLayout>
