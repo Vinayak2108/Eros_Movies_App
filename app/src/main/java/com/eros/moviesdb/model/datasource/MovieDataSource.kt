@@ -29,7 +29,7 @@ class MovieDataSource(private val query:String?): PageKeyedDataSource<Int, Movie
         }
         request.enqueue(object : Callback<MoviesResponse>{
             override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                Log.i("API",t.message ?: "")
+                callback.onResult(ArrayList(),null,null)
             }
             override fun onResponse(
                 call: Call<MoviesResponse>,

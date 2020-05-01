@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.eros.moviesdb.R
 import com.eros.moviesdb.model.db.DBProvider
 import com.eros.moviesdb.model.db.pojo.GenresItem
+import com.eros.moviesdb.model.db.pojo.Message
 import com.eros.moviesdb.model.db.pojo.MovieDetail
 import com.eros.moviesdb.model.db.pojo.SpokenLanguagesItem
 import com.eros.moviesdb.model.network.APIProvider
@@ -64,8 +65,8 @@ class MovieDetailViewModel : ViewModel() {
                             _movieDetails.postValue(response.body())
                         }else{
                             when(response.code()){
-                                404-> {_errorMessage.postValue(Message("Not Found","Check Another Movie"))}
-                                else -> {_errorMessage.postValue(Message("Server Error","Try again letter"))}
+                                404-> {_errorMessage.postValue(Message("Item Not Found","Check Another Movie"))}
+                                else -> {_errorMessage.postValue(Message("Server Error","Try again later"))}
                             }
                         }
                     }
@@ -97,6 +98,3 @@ class MovieDetailViewModel : ViewModel() {
     get() = _errorMessage
 
 }
-
-
-data class Message(val message:String,val subMessage:String)

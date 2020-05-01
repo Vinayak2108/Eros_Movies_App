@@ -49,6 +49,15 @@ class FavouriteMoviesFragment : BaseFragment(), AdapterClickHandler {
             adapter.submitList(it)
         })
         viewBinding.list.adapter = adapter
+
+        viewModel.firstItemLoaded.observe(viewLifecycleOwner, Observer {
+            hideMessage()
+        })
+
+        viewModel.message.observe(viewLifecycleOwner, Observer {
+            showMessage(it.message,it.subMessage)
+        })
+
     }
 
     override fun onItemClick(id: Int) {
@@ -59,6 +68,16 @@ class FavouriteMoviesFragment : BaseFragment(), AdapterClickHandler {
 
     override fun setFavourite(movie: Movie, favourite: Boolean, position: Int) {
         viewModel.deleteMovie(movie)
+    }
+
+    fun hideMessage(){
+        viewBinding.messageView.messageView.visibility = View.GONE
+    }
+
+    fun showMessage(message:String,subMessage:String){
+        viewBinding.messageView.message.text = message
+        viewBinding.messageView.subMessage.text = subMessage
+        viewBinding.messageView.messageView.visibility = View.VISIBLE
     }
 
 

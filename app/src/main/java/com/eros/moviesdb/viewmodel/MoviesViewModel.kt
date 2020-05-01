@@ -7,6 +7,7 @@ import androidx.paging.PagedList
 import com.eros.moviesdb.model.datasource.MovieDataSourceFactory
 import com.eros.moviesdb.model.datasource.pageSize
 import com.eros.moviesdb.model.db.DBProvider
+import com.eros.moviesdb.model.db.pojo.Message
 import com.eros.moviesdb.model.db.pojo.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,18 +20,42 @@ class MoviesViewModel() : ViewModel() {
     lateinit var dataSource:LiveData<PageKeyedDataSource<Int,Movie>>
     private val _notifyDataChanges = MutableLiveData<Int>()
     val notifyDataChanges:LiveData<Int>
-    get() = _notifyDataChanges
+        get() = _notifyDataChanges
+
+    private val _message = MutableLiveData<Message>()
+    val message:LiveData<Message>
+        get() = _message
+
+    private val _firstItemLoaded = MutableLiveData<Any>()
+    val firstItemLoaded:LiveData<Any>
+    get() = _firstItemLoaded
 
     private val _searchQuery = MutableLiveData<String>("")
     private val searchQuery:LiveData<String>
-    get() = _searchQuery
+        get() = _searchQuery
 
     init {
         movies = Transformations.switchMap(searchQuery) {
             val dataSourceFactory = MovieDataSourceFactory(it)
             dataSource = dataSourceFactory.movieDataSource
             val config = PagedList.Config.Builder().setEnablePlaceholders(false).setPageSize(pageSize).build()
-            return@switchMap LivePagedListBuilder(dataSourceFactory,config).build()
+            return@switchMap LivePagedListBuilder(dataSourceFactory,config)
+                .setBoundaryCallback(object: PagedList.BoundaryCallback<Movie>(){
+                    override fun onZeroItemsLoaded() {
+                        super.onZeroItemsLoaded()
+                        if(!searchQuery.value.isNullOrBlank())
+                            _message.postValue(Message("No Data Found","Try another word"))
+                        else
+                            _message.postValue(Message("Not Connected","Try again later"))
+                    }
+                    override fun onItemAtEndLoaded(itemAtEnd: Movie) {
+                        super.onItemAtEndLoaded(itemAtEnd)
+                    }
+                    override fun onItemAtFrontLoaded(itemAtFront: Movie) {
+                        super.onItemAtFrontLoaded(itemAtFront)
+                        _firstItemLoaded.postValue(Any())
+                    }
+                }).build()
         }
     }
 

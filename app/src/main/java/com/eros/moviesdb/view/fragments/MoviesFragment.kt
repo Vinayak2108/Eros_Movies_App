@@ -45,7 +45,6 @@ class MoviesFragment : BaseFragment(), AdapterClickHandler {
     }
 
     fun showLoader(){
-        viewBinder.messageView.messageView.visibility = View.GONE
         viewBinder.shimmering.shimmering.startShimmer()
         viewBinder.shimmering.shimmering.visibility = View.VISIBLE
     }
@@ -62,11 +61,6 @@ class MoviesFragment : BaseFragment(), AdapterClickHandler {
             adapter.submitList(it)
             if(it.size>20){
                 hideLoader()
-            }else{
-                lifecycleScope.launch {
-                    delay(3000)
-                    hideLoader()
-                }
             }
         })
         viewModel.notifyDataChanges.observe(viewLifecycleOwner, Observer {
@@ -79,8 +73,17 @@ class MoviesFragment : BaseFragment(), AdapterClickHandler {
 
         viewBinder.messageView.messageView.setOnClickListener {
             hideMessage()
+            showLoader()
             viewModel.retryDataCall()
         }
+        viewModel.message.observe(viewLifecycleOwner, Observer {
+            showMessage(it.message,it.subMessage)
+        })
+
+        viewModel.firstItemLoaded.observe(viewLifecycleOwner, Observer {
+            hideMessage()
+            hideLoader()
+        })
 
     }
 

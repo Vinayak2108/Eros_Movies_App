@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:padding="@dimen/component_margin" />
 
-    <include layout="@layout/message_view"/>
+    <include layout="@layout/message_view"
+        android:id="@+id/messageView"/>
 
 </FrameLayout>
